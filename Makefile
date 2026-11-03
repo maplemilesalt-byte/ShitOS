@@ -9,3 +9,5 @@ all:
 	
 	# 3. merge kernel and keyboard
 	ld -m elf_i386 -Ttext 0x1000 -e kernel --oformat binary kernel.o keyboard.o -o kernel.bin
+
+cat boot.bin kernel.bin > os-image.bin
