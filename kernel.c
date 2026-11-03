@@ -5,19 +5,6 @@
 volatile unsigned char* video_memory =
     (volatile unsigned char*)0xB8000;
 
-void outb(unsigned short port, unsigned char value) {
-    __asm__ __volatile__("outb %0, %1" : : "a"(value), "Nd"(port));
-}
-
-void update_cursor(int offset) {
-    unsigned short pos = offset / 2;
-
-    outb(0x3D4, 0x0F);
-    outb(0x3D5, (unsigned char)(pos & 0xFF));
-
-    outb(0x3D4, 0x0E);
-    outb(0x3D5, (unsigned char)(pos >> 8));
-}
 
 void kernel() {
 // Clear screen so all the bs is out
