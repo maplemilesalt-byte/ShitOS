@@ -1,4 +1,4 @@
-; Idk assembly, so chatgpt dod this part
+; Idk assembly, so chatgpt did this part
 
 [org 0x7c00]
 [bits 16]
@@ -20,7 +20,7 @@ start:
     mov bx, 0x1000
 
     mov ah, 0x02
-    mov al, 16
+    mov al, 17
     mov ch, 0
     mov cl, 2
     mov dh, 0
