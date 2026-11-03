@@ -6,33 +6,37 @@ volatile unsigned char* video_memory =
     (volatile unsigned char*)0xB8000;
 
 void kernel() {
+// Clear screen so all the bs is out
+    for (int i = 0; i < 80 * 25 * 2; i += 2) {
+        video_memory[i]     = ' ';  // Ovewrite bios trash
+        video_memory[i + 1] = 0x07; // Make the background black
+    }
+
+    // ShitOS message
     const char* str = "ShitOS IS RUNNING!!!";
     int i = 0;
 
-    // Imprime a mensagem inicial do ShitOS
     while (str[i] != '\0') {
         video_memory[i * 2] = str[i];
-        video_memory[i * 2 + 1] = 0x07; // Text Color
+        video_memory[i * 2 + 1] = 0x07; 
         i++;
     }
 
+    // Type in line 2
     int cursor_vga = 160; 
 
-    // gets keyboard
+    // Keyboard loop
     while (1) {
-        char c = keyboard_get_char(); // get key from keyboard.c
+        char c = keyboard_get_char(); 
         
         if (c != 0) {
-            // If enter, go down
             if (c == '\n') {
-                // CURSOR GOES BRRRRR
                 cursor_vga = ((cursor_vga / 160) + 1) * 160;
             } 
-            // If exists print
             else {
-                video_memory[cursor_vga] = c;       // Place letter
-                video_memory[cursor_vga + 1] = 0x0A;   // Gaster color
-                cursor_vga += 2;                     // Goes 2 bytes on video
+                video_memory[cursor_vga] = c;       
+                video_memory[cursor_vga + 1] = 0x0A;   // Verde hacker
+                cursor_vga += 2;                     
             }
         }
     }
