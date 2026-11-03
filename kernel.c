@@ -5,22 +5,22 @@
 volatile unsigned char* video_memory =
     (volatile unsigned char*)0xB8000;
 
-static inline void disable_vga_cursor() {
-    __asm__ volatile (
-        "movb $0x0A, %%al\n"
-        "movw $0x3D4, %%dx\n"
-        "outb %%al, %%dx\n"
-        "movb $0x20, %%al\n"
-        "incw %%dx\n"
-        "outb %%al, %%dx\n"
-        :
-        :
-        : "al", "dx"
-    );
+static inline void outb(unsigned short port, unsigned char value) {
+    __asm__ volatile ("outb %0, %1" : : "a"(value), "Nd"(port));
+}
+
+void hide_cursor_gambiarra() {
+    unsigned int pos = 0xFFFF;
+
+    outb(0x3D4, 0x0E);
+    outb(0x3D5, (pos >> 8) & 0xFF);
+
+    outb(0x3D4, 0x0F);
+    outb(0x3D5, pos & 0xFF);
 }
 
 void kernel() {
-    disable_vga_cursor();
+    hide_cursor_gambiarra();
 
 void kernel() {
 // Clear screen so all the bs is out
