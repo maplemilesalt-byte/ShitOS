@@ -1,14 +1,27 @@
 // ShitOS Kernel
 // Fixd by ai, but the og was by me
-#include "keyboard.h" 
+c
+#include "keyboard.h"
 
 volatile unsigned char* video_memory =
     (volatile unsigned char*)0xB8000;
 
-static inline void outb(unsigned short port, unsigned char value) {
-    __asm__ volatile ("outb %0, %1" : : "a"(value), "Nd"(port));
+static inline void disable_vga_cursor() {
+    __asm__ volatile (
+        "movb $0x0A, %%al\n"
+        "movw $0x3D4, %%dx\n"
+        "outb %%al, %%dx\n"
+        "movb $0x20, %%al\n"
+        "incw %%dx\n"
+        "outb %%al, %%dx\n"
+        :
+        :
+        : "al", "dx"
+    );
 }
 
+void kernel() {
+    disable_vga_cursor();
 
 void kernel() {
 // Clear screen so all the bs is out
