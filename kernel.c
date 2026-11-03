@@ -1,6 +1,5 @@
 // ShitOS Kernel
 // Fixd by ai, but the og was by me
-c
 #include "keyboard.h"
 
 volatile unsigned char* video_memory =
@@ -58,4 +57,5 @@ void kernel() {
             }
         }
     }
+}
 }
