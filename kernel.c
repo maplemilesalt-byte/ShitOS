@@ -35,7 +35,7 @@ void kernel() {
             } 
             else {
                 video_memory[cursor_vga] = c;       
-                video_memory[cursor_vga + 1] = 0x0A;   // Verde hacker
+                video_memory[cursor_vga + 1] = 0x0A;   // Gaster Color
                 cursor_vga += 2;                     
             }
         }
