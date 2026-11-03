@@ -9,18 +9,9 @@ static inline void outb(unsigned short port, unsigned char value) {
     __asm__ volatile ("outb %0, %1" : : "a"(value), "Nd"(port));
 }
 
-void hide_cursor_gambiarra() {
-    unsigned int pos = 0xFFFF;
-
-    outb(0x3D4, 0x0E);
-    outb(0x3D5, (pos >> 8) & 0xFF);
-
-    outb(0x3D4, 0x0F);
-    outb(0x3D5, pos & 0xFF);
 }
 
 void kernel() {
-    hide_cursor_gambiarra();
 // Clear screen so all the bs is out
     for (int i = 0; i < 80 * 25 * 2; i += 2) {
         video_memory[i]     = ' ';  // Ovewrite bios trash
