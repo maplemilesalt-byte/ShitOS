@@ -10,5 +10,8 @@ all:
 	# 3. merge kernel and keyboard
 	ld -m elf_i386 -Ttext 0x1000 -e kernel --oformat binary kernel.o keyboard.o -o kernel.bin
 
+	# Check kernel size
+	test $$(stat -c%s kernel.bin) -le 8704
+
 	# 4. Make le file
 	cat boot.bin kernel.bin > os-image.bin
