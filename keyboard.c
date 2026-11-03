@@ -1,5 +1,6 @@
 // Keyboard code by ai
 // at this point i cant make any other code :(
+#include "keyboard.h"
 
 unsigned char inb(unsigned short port) {
     unsigned char result;
@@ -17,18 +18,17 @@ unsigned char kbd_us[128] = {
     '\\', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', 0, '*', 0, ' '
 };
 
-unsigned char teclado_ler_scancode() {
+unsigned char keyboard_read_scancode() {
     while ((inb(PS2_STATUS_PORT) & 1) == 0) {
-        // Wait until a key is pressed
+        // Wait for keyboard
     }
     return inb(PS2_DATA_PORT);
 }
 
-char teclado_get_char() {
-    unsigned char scancode = teclado_ler_scancode();
-    // See if key is pressed
+char keyboard_get_char() {
+    unsigned char scancode = keyboard_read_scancode();
     if (!(scancode & 0x80)) {
         return kbd_us[scancode];
     }
-    return 0; // RETURN 0 OR ILL CRASH >:(
+    return 0;
 }
