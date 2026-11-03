@@ -1,6 +1,6 @@
 // ShitOS Kernel
 // Fixd by ai, but the og was by me
-#include "keyboard.h" // Adicione isso para o kernel conhecer o teclado
+#include "keyboard.h" 
 
 volatile unsigned char* video_memory =
     (volatile unsigned char*)0xB8000;
