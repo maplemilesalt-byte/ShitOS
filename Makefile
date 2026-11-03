@@ -8,7 +8,7 @@ all:
 	test $$(stat -c%s kernel.bin) -le 8192
 	test $$(stat -c%s boot.bin) -eq 512
 	cat boot.bin kernel.bin > os-image.bin
-	truncate -s 8704 os-image.bin
+	truncate -s 8192 os-image.bin
 
 run: all
 	qemu-system-i386 -drive format=raw,file=os-image.bin
